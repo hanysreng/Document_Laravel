@@ -1,0 +1,90 @@
+
+<html>
+    <head>
+       
+		<title>Chat of WEP 2019</title>
+		<script src="jquery.js"></script>
+        <link rel="stylesheet" href="style.css">
+        <!-- <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css"> -->
+    </head>
+    <body id='body'>
+        <h1>Instant messenger</h1>
+
+        <div id="messagesTable"> 
+            <div id="loading">
+                <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i> 
+            </div>
+        </div>
+
+        <div id="createMessage">
+            <BR/>Username: <input type='text' size='10' id='user' />	
+                 Message: <input type='text' id='message' />
+            <input type='button' value='Send' id='sendButton' onClick='createMessage();'/>
+            
+		</div>
+		
+		<div id="error"></div>
+		
+        <script>
+           TODO: var url = "http://kratie.pnc.lan/laura.hennequin/ssl/project/messages.php";
+
+			function getMessage()
+			   {
+				$("#body").addClass('loading');
+				$.ajax({
+					method:'GET',
+					url: url,
+					dataType: 'json'
+				})
+				.done(displayTable)
+				.fail(displayError);
+			}
+			function createMessage()
+			{
+				$("#body").addClass('loading');
+                var name = $("#user").val();
+				var message = $("#message").val();
+             
+				$.ajax({
+					method: "post",
+					url: "http://kratie.pnc.lan/laura.hennequin/ssl/project/messages.php",
+					data:{'user':name,'message':message}
+
+					//TODO: add the data to post to the web service
+				})
+				.done(getMessage)
+				.fail(displayError);
+			}
+
+			function displayTable(json) {
+				var out = "<table><tr><th>User</th><th>Message</th></tr>";
+				var i;
+				for(i = 0; i < json.length; i++) {
+					out += '<tr>';
+					out += '<td>' + json[i].user + '</td>';
+					out += '<td>' + json[i].message + '</td>';
+					out += '</tr>';
+				}
+				out += "</table>";
+				$("#messagesTable").html(out);
+				$("#body").removeClass('loading');	
+			}
+
+			function displayError(error){
+				$("#body").removeClass('loading');
+				$("#error").html('Sorry, there was an error: ' + error.statusText + " (" + error.status + ")")
+				.css('color','red');
+			}
+			$(document).ready(function(){
+				   getMessage();
+
+                //Refreshes data every 3 seconds
+				   setInterval(function(){ getMessage(); }, 3000);
+				  
+			});
+				   
+			
+		</script>
+		
+    </body>
+    </html>

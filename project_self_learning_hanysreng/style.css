@@ -1,0 +1,50 @@
+body
+{
+	width: 100%;
+	margin: auto;
+	height: 100%;
+}
+
+h1
+{
+	background-color:rgb(0,130,200);
+	width: 100%;
+	height: 10%;
+	line-height: 150%;
+	color: white;
+	text-align: center;
+	margin: auto;
+}
+
+#createMessage
+{
+	width: 95%;
+	height: 10%;
+	padding-left: 5%;
+	background-color: #eeeeee;
+}
+
+#messagesTable
+{
+	background-color: #f9f9f9;
+	overflow-y: scroll;
+	width: 100%; 
+	height: 80%;
+}
+
+#messagesTable table td
+{
+	white-space: wrap;
+	padding-left: 10px;
+}
+
+#messagesTable table
+{
+	padding: 10px;
+}
+
+#loading 
+{
+	text-align: center;
+	padding-top: 5%;
+}
